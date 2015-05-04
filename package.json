@@ -16,6 +16,6 @@
   "bin": "js.sh",
   "repository": {
     "type": "git",
-    "url": "git://github.com/zertosh/js-sh.git"
+    "url": "git://github.com/zertosh/js.sh.git"
   }
 }
