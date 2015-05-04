@@ -1,0 +1,21 @@
+{
+  "name": "js.sh",
+  "version": "0.0.0",
+  "description": "js.sh",
+  "keywords": [
+    "shell",
+    "node",
+    "iojs"
+  ],
+  "homepage": "https://github.com/zertosh/js.sh",
+  "licence": "MIT",
+  "author": "Andres Suarez <zertosh@gmail.com>",
+  "files": [
+    "js.sh"
+  ],
+  "bin": "js.sh",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/zertosh/js-sh.git"
+  }
+}
