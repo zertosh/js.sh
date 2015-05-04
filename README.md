@@ -27,26 +27,32 @@ NODE_VER=v0.10.38
 
 
 ```sh
-# Jump into the REPL
+# jump into the REPL
 js.sh node
 
-# Run "npm install"
+# run "npm install"
 js.sh npm install
 
-# Run "npm install" with a particular version of node
+# run "npm install" with a particular version of node
 NODE_DIST=node NODE_VER=v0.12.2 js.sh npm install
 
-# Run a local CLI package (node_modules/.bin)
+# run a local CLI package (node_modules/.bin)
 js.sh browserify app/main.js > public/built.js
 
-# Run a nightly iojs
+# run a nightly iojs
 NODE_VER=v2.0.0-nightly2015050366877216bd js.sh node
 
-# Update npm and then use it
+# update npm and then use it
 js.sh npm install npm
 js.sh npm
 ```
 
-## Notes
+## copy into your project
+
+```js
+curl -LO "https://github.com/zertosh/js.sh/raw/master/js.sh" && chmod +x js.sh
+```
+
+## credit
 
 Thank you [@tomcz](https://github.com/tomcz)!
