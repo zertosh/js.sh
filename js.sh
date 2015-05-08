@@ -2,36 +2,39 @@
 
 set -e
 
-NODE_DIST_DEFAULT=iojs
-# NODE_DIST_DEFAULT=node
+# [[ -f .jsshrc ]] && eval $(cat .jsshrc)
 
-NODE_VER_IOJS_DEFAULT=v1.8.1
-NODE_VER_NODE_DEFAULT=v0.10.38
+: ${NODE_DIST:=iojs-v1.7.1}
+# : ${NODE_DIST:=node-v0.10.38}
+# : ${NODE_DIST:=node-v0.12.2}
+# : ${NODE_DIST:=iojs-v2.0.2-nightly201505078bf878d6e5}
 
-: ${NODE_DIST:=$NODE_DIST_DEFAULT}
-
-if [[ -z $NODE_VER ]] && [[ $NODE_DIST = iojs ]]; then
-  NODE_VER=$NODE_VER_IOJS_DEFAULT
-elif [[ -z $NODE_VER ]] && [[ $NODE_DIST = node ]]; then
-  NODE_VER=$NODE_VER_NODE_DEFAULT
-fi
+NODE_TYPE=${NODE_DIST%%-*}
+NODE_VER=${NODE_DIST#*-}
+NODE_OS=$(uname | tr A-Z a-z)
+NODE_DIR="$PWD/vendor/$NODE_TYPE-$NODE_VER-$NODE_OS-x64"
+NODE_MODULES_DIR="$PWD/node_modules"
 
 if [[ $# == 0 ]]; then
   echo 'Usage: js.sh node [args]'
   echo '       js.sh npm [args]'
   echo '       js.sh MODULE_CLI [args]'
+  echo '       js.sh --bins'
   exit 1
 fi
 
-NODE_OS=$(uname | tr A-Z a-z)
-NODE_DIR="$PWD/vendor/$NODE_DIST-$NODE_VER-$NODE_OS-x64"
-NODE_MODULES_DIR="$PWD/node_modules"
+if [[ $1 == '--bins' ]]; then
+  echo $NODE_DIR/bin/node
+  echo $NODE_DIR/bin/npm
+  [[ $NODE_TYPE == iojs ]] && echo $NODE_DIR/bin/iojs
+  exit 0
+fi
 
-if [[ $NODE_VER == *"nightly"* ]]; then
+if [[ $NODE_TYPE == iojs ]] && [[ $NODE_VER == *"nightly"* ]]; then
   NODE_URL="https://iojs.org/download/nightly/$NODE_VER/iojs-$NODE_VER-$NODE_OS-x64.tar.gz"
-elif [[ $NODE_DIST == iojs ]]; then
+elif [[ $NODE_TYPE == iojs ]]; then
   NODE_URL="https://iojs.org/dist/$NODE_VER/iojs-$NODE_VER-$NODE_OS-x64.tar.gz"
-elif [[ $NODE_DIST == node ]]; then
+elif [[ $NODE_TYPE == node ]]; then
   NODE_URL="https://nodejs.org/dist/$NODE_VER/node-$NODE_VER-$NODE_OS-x64.tar.gz"
 fi
 
