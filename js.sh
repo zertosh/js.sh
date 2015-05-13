@@ -4,6 +4,8 @@ set -e
 
 # [[ -f .jsshrc ]] && eval $(cat .jsshrc)
 
+: ${NODE_ENV:=development}
+
 : ${NODE_DIST:=iojs-v1.7.1}
 # : ${NODE_DIST:=node-v0.10.38}
 # : ${NODE_DIST:=node-v0.12.2}
@@ -45,6 +47,7 @@ fi
 
 export PATH="$PWD/$NODE_DIR/bin:$PATH"
 export NODE_PATH="$PWD/$NODE_DIR/lib/node_modules"
+export NODE_ENV=$NODE_ENV
 
 NODE_CMD_BIN="$NODE_DIR/bin/$1"
 MODULE_CLI_BIN="node_modules/.bin/$1"
