@@ -12,8 +12,7 @@ set -e
 NODE_TYPE=${NODE_DIST%%-*}
 NODE_VER=${NODE_DIST#*-}
 NODE_OS=$(uname | tr A-Z a-z)
-NODE_DIR="$PWD/vendor/$NODE_TYPE-$NODE_VER-$NODE_OS-x64"
-NODE_MODULES_DIR="$PWD/node_modules"
+NODE_DIR="vendor/$NODE_TYPE-$NODE_VER-$NODE_OS-x64"
 
 if [[ $# == 0 ]]; then
   echo 'Usage: js.sh node [args]'
@@ -44,19 +43,19 @@ if [[ ! -e $NODE_DIR/bin/node ]] || [[ ! -e $NODE_DIR/bin/npm ]]; then
   curl $NODE_URL | tar -xz -C $NODE_DIR --strip-components=1
 fi
 
-export PATH="$NODE_DIR/bin:$PATH"
-export NODE_PATH="$NODE_DIR/lib/node_modules"
+export PATH="$PWD/$NODE_DIR/bin:$PATH"
+export NODE_PATH="$PWD/$NODE_DIR/lib/node_modules"
 
 NODE_CMD_BIN="$NODE_DIR/bin/$1"
-MODULE_CLI_BIN="$NODE_MODULES_DIR/.bin/$1"
+MODULE_CLI_BIN="node_modules/.bin/$1"
 
 if [[ -x "$MODULE_CLI_BIN" ]]; then
   shift
-  echo "Using: ${NODE_DIR/#$HOME/\~} with ${MODULE_CLI_BIN/#$PWD/\.}" 1>&2;
+  echo "Using: $NODE_DIR with $MODULE_CLI_BIN" 1>&2;
   $MODULE_CLI_BIN $@
 elif [[ -x "$NODE_CMD_BIN" ]]; then
   shift
-  echo "Using: ${NODE_CMD_BIN/#$HOME/\~}" 1>&2;
+  echo "Using: $NODE_CMD_BIN" 1>&2;
   $NODE_CMD_BIN $@
 else
   echo "Don't know $1 - what is it?" 1>&2;
