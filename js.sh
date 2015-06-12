@@ -39,15 +39,14 @@ case "$1" in
     ;;
 esac
 
-if [[ $NODE_TYPE == iojs ]] && [[ $NODE_VER == *"nightly"* ]]; then
-  NODE_URL="https://iojs.org/download/nightly/$NODE_VER/iojs-$NODE_VER-$NODE_OS-x64.tar.gz"
-elif [[ $NODE_TYPE == iojs ]]; then
-  NODE_URL="https://iojs.org/dist/$NODE_VER/iojs-$NODE_VER-$NODE_OS-x64.tar.gz"
-elif [[ $NODE_TYPE == node ]]; then
-  NODE_URL="https://nodejs.org/dist/$NODE_VER/node-$NODE_VER-$NODE_OS-x64.tar.gz"
-fi
-
 if [[ ! -e $NODE_DIR/bin/node ]] || [[ ! -e $NODE_DIR/bin/npm ]]; then
+  if [[ $NODE_TYPE == iojs ]] && [[ $NODE_VER == *"nightly"* ]]; then
+    NODE_URL="https://iojs.org/download/nightly/$NODE_VER/iojs-$NODE_VER-$NODE_OS-x64.tar.gz"
+  elif [[ $NODE_TYPE == iojs ]]; then
+    NODE_URL="https://iojs.org/dist/$NODE_VER/iojs-$NODE_VER-$NODE_OS-x64.tar.gz"
+  elif [[ $NODE_TYPE == node ]]; then
+    NODE_URL="https://nodejs.org/dist/$NODE_VER/node-$NODE_VER-$NODE_OS-x64.tar.gz"
+  fi
   echo "Downloading $NODE_URL ..." 1>&2
   mkdir -p $NODE_DIR
   curl $NODE_URL | tar -xz -C $NODE_DIR --strip-components=1
