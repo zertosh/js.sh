@@ -24,12 +24,20 @@ if [[ $# == 0 ]]; then
   exit 1
 fi
 
-if [[ $1 == '--bins' ]]; then
-  echo $NODE_DIR/bin/node
-  echo $NODE_DIR/bin/npm
-  [[ $NODE_TYPE == iojs ]] && echo $NODE_DIR/bin/iojs
-  exit 0
-fi
+case "$1" in
+  --node-bin)
+    echo $NODE_DIR/bin/node; exit 0;;
+  --iojs-bin)
+    echo $NODE_DIR/bin/iojs; exit 0;;
+  --npm-bin)
+    echo $NODE_DIR/bin/npm; exit 0;;
+  --bins)
+    echo $NODE_DIR/bin/node
+    [[ $NODE_TYPE == iojs ]] && echo $NODE_DIR/bin/iojs
+    echo $NODE_DIR/bin/npm
+    exit 0
+    ;;
+esac
 
 if [[ $NODE_TYPE == iojs ]] && [[ $NODE_VER == *"nightly"* ]]; then
   NODE_URL="https://iojs.org/download/nightly/$NODE_VER/iojs-$NODE_VER-$NODE_OS-x64.tar.gz"
