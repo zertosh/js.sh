@@ -6,10 +6,10 @@ set -e
 
 : ${NODE_ENV:=development}
 
-: ${NODE_DIST:=iojs-v1.7.1}
+: ${NODE_DIST:=iojs-v2.2.1}
 # : ${NODE_DIST:=node-v0.10.38}
-# : ${NODE_DIST:=node-v0.12.2}
-# : ${NODE_DIST:=iojs-v2.0.2-nightly201505078bf878d6e5}
+# : ${NODE_DIST:=node-v0.12.4}
+# : ${NODE_DIST:=iojs-v2.2.2-nightly201506116e4d30286d}
 
 NODE_TYPE=${NODE_DIST%%-*}
 NODE_VER=${NODE_DIST#*-}
