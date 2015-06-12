@@ -1,6 +1,6 @@
 {
   "name": "js.sh",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "js.sh",
   "keywords": [
     "shell",
@@ -17,5 +17,6 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/zertosh/js.sh.git"
-  }
+  },
+  "scripts": {}
 }
