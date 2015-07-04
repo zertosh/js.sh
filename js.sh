@@ -28,7 +28,8 @@ while test $# -gt 0; do
     --iojs-bin) echo $NODE_DIR/bin/iojs; shift;;
     --npm-bin)  echo $NODE_DIR/bin/npm; shift;;
     --clean)
-      find vendor -maxdepth 1 \( -name "iojs-v*" -o -name "node-v*" \) \
+      [[ -d "vendor" ]] && \
+        find vendor -maxdepth 1 \( -type d -name "iojs-v*" -o -name "node-v*" \) \
         -exec sh -c 'echo "js.sh: Removing {}" 1>&2; rm -rf "{}"' \;
       shift
       ;;
