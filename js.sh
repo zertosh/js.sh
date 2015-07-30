@@ -17,7 +17,7 @@ NODE_OS=$(uname | tr A-Z a-z)
 NODE_DIR="vendor/$NODE_TYPE-$NODE_VER-$NODE_OS-x64"
 
 if [[ $# == 0 ]]; then
-  echo 'usage: js.sh [--node-bin] [--iojs-bin] [--npm-bin] [--clean]'
+  echo 'usage: js.sh [--node-bin] [--iojs-bin] [--npm-bin] [--clean] [--env]'
   echo '       js.sh [--clean] [node|npm|MODULE_CLI] [args...]'
   exit 1
 fi
@@ -31,6 +31,14 @@ while test $# -gt 0; do
       [[ -d "vendor" ]] && \
         find vendor -maxdepth 1 \( -type d -name "iojs-v*" -o -name "node-v*" \) \
         -exec sh -c 'echo "js.sh: Removing {}" 1>&2; rm -rf "{}"' \;
+      shift
+      ;;
+    --env)
+      if [[ $PATH != $PWD/$NODE_DIR/bin:* ]]; then
+        echo "export PATH=\"$PWD/$NODE_DIR/bin:\$PATH\""
+        echo "export NODE_PATH=\"$PWD/$NODE_DIR/lib/node_modules\""
+        echo "export NODE_ENV=$NODE_ENV"
+      fi
       shift
       ;;
     *)
