@@ -1,22 +1,18 @@
 {
   "name": "js.sh",
   "version": "0.1.0",
-  "description": "js.sh",
+  "description": "Use a specific version node in the current directory",
   "keywords": [
     "shell",
     "node",
     "iojs"
   ],
-  "homepage": "https://github.com/zertosh/js.sh",
-  "licence": "MIT",
+  "license": "MIT",
   "author": "Andres Suarez <zertosh@gmail.com>",
   "files": [
     "js.sh"
   ],
   "bin": "js.sh",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/zertosh/js.sh.git"
-  },
+  "repository": "zertosh/js.sh",
   "scripts": {}
 }
