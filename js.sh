@@ -4,15 +4,13 @@ set -e
 
 # [[ -f .jsshrc ]] && eval $(cat .jsshrc)
 
-: ${NODE_DIST:=node-v5.0.0}
-# : ${NODE_DIST:=node-v4.2.1}
+: ${NODE_VERSION:=v5.0.0}
+# : ${NODE_VERSION:=v4.2.1}
 
 : ${NODE_ENV:=development}
 
-NODE_TYPE=${NODE_DIST%%-*}
-NODE_VER=${NODE_DIST#*-}
 NODE_OS=$(uname | tr A-Z a-z)
-NODE_DIR="vendor/$NODE_TYPE-$NODE_VER-$NODE_OS-x64"
+NODE_DIR="vendor/node-$NODE_VERSION-$NODE_OS-x64"
 
 if [[ $# == 0 ]]; then
   echo 'usage: js.sh [--node-bin] [--npm-bin] [--clean] [--env]'
@@ -48,7 +46,7 @@ done
 [[ $# == 0 ]] && exit 0
 
 if [[ ! -e $NODE_DIR/bin/node ]] || [[ ! -e $NODE_DIR/bin/npm ]]; then
-  NODE_URL="https://nodejs.org/dist/$NODE_VER/$NODE_TYPE-$NODE_VER-$NODE_OS-x64.tar.gz"
+  NODE_URL="https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-$NODE_OS-x64.tar.gz"
   echo "js.sh: Downloading $NODE_URL ..." 1>&2
   mkdir -p $NODE_DIR
   curl $NODE_URL | tar -xz -C $NODE_DIR --strip-components=1
