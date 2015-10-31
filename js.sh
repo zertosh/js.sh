@@ -4,7 +4,9 @@ set -e
 
 # [[ -f .jsshrc ]] && eval $(cat .jsshrc)
 
-: ${NODE_DIST:=node-v4.1.2}
+: ${NODE_DIST:=node-v5.0.0}
+# : ${NODE_DIST:=node-v4.2.1}
+
 : ${NODE_ENV:=development}
 
 NODE_TYPE=${NODE_DIST%%-*}
