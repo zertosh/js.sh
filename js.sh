@@ -5,6 +5,8 @@ set -e
 # [[ -f .jsshrc ]] && eval $(cat .jsshrc)
 
 : ${NODE_VERSION:=v5.0.0}
+# : ${NODE_VERSION:=v5.0.1-nightly201510294e54dbec51}
+# : ${NODE_VERSION:=v5.0.0-rc.2}
 # : ${NODE_VERSION:=v4.2.1}
 
 : ${NODE_ENV:=development}
@@ -46,7 +48,12 @@ done
 [[ $# == 0 ]] && exit 0
 
 if [[ ! -e $NODE_DIR/bin/node ]] || [[ ! -e $NODE_DIR/bin/npm ]]; then
-  NODE_URL="https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-$NODE_OS-x64.tar.gz"
+  case $NODE_VERSION in
+    *"-nightly"*) CHANNEL="nightly";;
+    *"-rc"*)      CHANNEL="rc";;
+    *)            CHANNEL="release";;
+  esac
+  NODE_URL="https://nodejs.org/download/$CHANNEL/$NODE_VERSION/node-$NODE_VERSION-$NODE_OS-x64.tar.gz"
   echo "js.sh: Downloading $NODE_URL ..." 1>&2
   mkdir -p $NODE_DIR
   curl $NODE_URL | tar -xz -C $NODE_DIR --strip-components=1
