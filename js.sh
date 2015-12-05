@@ -4,10 +4,11 @@ set -e
 
 # [[ -f .jsshrc ]] && eval $(cat .jsshrc)
 
-: ${NODE_VERSION:=v5.0.0}
-# : ${NODE_VERSION:=v5.0.1-nightly201510294e54dbec51}
+: ${NODE_VERSION:=v5.1.1}
+# : ${NODE_VERSION:=v4.2.3}
+# : ${NODE_VERSION:=v4.1.1}
 # : ${NODE_VERSION:=v5.0.0-rc.2}
-# : ${NODE_VERSION:=v4.2.1}
+# : ${NODE_VERSION:=v5.0.1-nightly201510294e54dbec51}
 
 : ${NODE_ENV:=development}
 
