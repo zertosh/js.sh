@@ -54,10 +54,10 @@ if [[ ! -e $NODE_DIR/bin/node ]] || [[ ! -e $NODE_DIR/bin/npm ]]; then
     *"-rc"*)      CHANNEL="rc";;
     *)            CHANNEL="release";;
   esac
-  NODE_URL="https://nodejs.org/download/$CHANNEL/$NODE_VERSION/node-$NODE_VERSION-$NODE_OS-x64.tar.gz"
+  NODE_URL="https://nodejs.org/download/$CHANNEL/$NODE_VERSION/node-$NODE_VERSION-$NODE_OS-x64.tar.xz"
   echo "js.sh: Downloading $NODE_URL ..." 1>&2
   mkdir -p $NODE_DIR
-  curl $NODE_URL | tar -xz -C $NODE_DIR --strip-components=1
+  curl $NODE_URL | tar -x -C $NODE_DIR --strip-components=1
 fi
 
 export PATH="$PWD/$NODE_DIR/bin:$PATH"
