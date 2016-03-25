@@ -2,8 +2,6 @@
 
 set -e
 
-# [[ -f .jsshrc ]] && eval $(cat .jsshrc)
-
 : ${NODE_VERSION:=v5.3.0}
 # : ${NODE_VERSION:=v4.2.3}
 # : ${NODE_VERSION:=v4.1.1}
