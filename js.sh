@@ -2,11 +2,11 @@
 
 set -e
 
-: ${NODE_VERSION:=v5.3.0}
-# : ${NODE_VERSION:=v4.2.3}
-# : ${NODE_VERSION:=v4.1.1}
-# : ${NODE_VERSION:=v5.0.0-rc.2}
-# : ${NODE_VERSION:=v5.0.1-nightly201510294e54dbec51}
+: ${node_version:=v5.9.1}
+# : ${node_version:=v4.4.1}
+# : ${node_version:=v4.1.1}
+# : ${node_version:=v5.8.1-rc.1}
+# : ${node_version:=v6.0.0-nightly20160307449684752c}
 
 : ${NODE_ENV:=development}
 
