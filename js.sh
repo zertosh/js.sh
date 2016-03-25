@@ -68,11 +68,11 @@ MODULE_CLI_BIN="node_modules/.bin/$1"
 if [[ -x "$MODULE_CLI_BIN" ]]; then
   shift
   echo "js.sh: NODE_ENV=\"$NODE_ENV\" $NODE_DIR on $MODULE_CLI_BIN" 1>&2
-  $MODULE_CLI_BIN $@
+  exec "$MODULE_CLI_BIN" "$@"
 elif [[ -x "$NODE_CMD_BIN" ]]; then
   shift
   echo "js.sh: NODE_ENV=\"$NODE_ENV\" $NODE_CMD_BIN" 1>&2
-  $NODE_CMD_BIN $@
+  exec "$NODE_CMD_BIN" "$@"
 else
   echo "js.sh: Don't know what \"$1\" is" 1>&2
   exit 1
