@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 : ${node_version:=v6.0.0}
 # : ${node_version:=v5.11.0}
 # : ${node_version:=v4.4.3}
@@ -10,14 +8,16 @@ set -e
 
 : ${NODE_ENV:=development}
 
-node_os=$(uname | tr A-Z a-z)
-node_dir="vendor/node-$node_version-$node_os-x64"
+set -e
 
 if [[ $# == 0 ]]; then
   echo 'usage: js.sh [--node-bin] [--npm-bin] [--clean] [--env]'
   echo '       js.sh [--clean] [node|npm|MODULE_CLI] [args...]'
   exit 1
 fi
+
+node_os=$(uname | tr A-Z a-z)
+node_dir="vendor/node-$node_version-$node_os-x64"
 
 while test $# -gt 0; do
   case "$1" in
