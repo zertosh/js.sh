@@ -1,6 +1,6 @@
 {
   "name": "js.sh",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Use a specific version node in the current directory",
   "keywords": [
     "shell",
