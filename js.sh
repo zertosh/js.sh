@@ -22,11 +22,11 @@ optnum=$#
 while [ $# -gt 0 ]; do
   case "$1" in
     --node-bin)
-      echo $node_dir/bin/node
+      echo "$node_dir/bin/node"
       shift
       ;;
     --npm-bin)
-      echo $node_dir/bin/npm
+      echo "$node_dir/bin/npm"
       shift
       ;;
     --env)
@@ -35,8 +35,11 @@ while [ $# -gt 0 ]; do
       shift
       ;;
     --clean)
-      if [[ -d 'vendor' ]]; then
-        find 'vendor' -maxdepth 1 -type d -name 'node-v*' \
+      if [[ -d "vendor" ]]; then
+        find "vendor" \
+          -maxdepth 1 \
+          -type d \
+          -name 'node-v*' \
           -exec sh -c 'echo "js.sh: Removing {}" 1>&2; rm -rf "{}"' \;
       fi
       shift
@@ -50,7 +53,7 @@ done
 [[ $# == 0 ]] && exit 0
 [[ $# != $optnum ]] && exit 0
 
-if [[ ! -e $node_dir/bin/node ]] || [[ ! -e $node_dir/bin/npm ]]; then
+if [[ ! -e "$node_dir/bin/node" ]] || [[ ! -e "$node_dir/bin/npm" ]]; then
   case $node_version in
     *"-nightly"*) channel="nightly";;
     *"-rc"*)      channel="rc";;
@@ -66,12 +69,12 @@ export PATH="$PWD/$node_dir/bin:$PATH"
 export NODE_PATH="$PWD/$node_dir/lib/node_modules"
 
 node_cmd_bin="$node_dir/bin/$1"
-module_cli_bin="node_modules/.bin/$1"
+module_bin_bin="node_modules/.bin/$1"
 
-if [[ -x "$module_cli_bin" ]]; then
+if [[ -x "$module_bin_bin" ]]; then
   shift
-  echo "js.sh: $node_dir on $module_cli_bin" 1>&2
-  exec "$module_cli_bin" "$@"
+  echo "js.sh: $node_dir on $module_bin_bin" 1>&2
+  exec "$module_bin_bin" "$@"
 elif [[ -x "$node_cmd_bin" ]]; then
   shift
   echo "js.sh: $node_cmd_bin" 1>&2
