@@ -10,8 +10,8 @@ set -e
 
 : ${NODE_ENV:=development}
 
-NODE_OS=$(uname | tr A-Z a-z)
-NODE_DIR="vendor/node-$NODE_VERSION-$NODE_OS-x64"
+node_os=$(uname | tr A-Z a-z)
+node_dir="vendor/node-$node_version-$node_os-x64"
 
 if [[ $# == 0 ]]; then
   echo 'usage: js.sh [--node-bin] [--npm-bin] [--clean] [--env]'
@@ -21,8 +21,8 @@ fi
 
 while test $# -gt 0; do
   case "$1" in
-    --node-bin) echo $NODE_DIR/bin/node; shift;;
-    --npm-bin)  echo $NODE_DIR/bin/npm; shift;;
+    --node-bin) echo $node_dir/bin/node; shift;;
+    --npm-bin)  echo $node_dir/bin/npm; shift;;
     --clean)
       if [[ -d 'vendor' ]]; then
         find 'vendor' -maxdepth 1 -type d -name 'node-v*' \
@@ -31,9 +31,9 @@ while test $# -gt 0; do
       shift
       ;;
     --env)
-      if [[ $PATH != $PWD/$NODE_DIR/bin:* ]]; then
-        echo "export PATH=\"$PWD/$NODE_DIR/bin:\$PATH\""
-        echo "export NODE_PATH=\"$PWD/$NODE_DIR/lib/node_modules\""
+      if [[ $PATH != $PWD/$node_dir/bin:* ]]; then
+        echo "export PATH=\"$PWD/$node_dir/bin:\$PATH\""
+        echo "export NODE_PATH=\"$PWD/$node_dir/lib/node_modules\""
         echo "export NODE_ENV=$NODE_ENV"
       fi
       shift
@@ -46,33 +46,33 @@ done
 
 [[ $# == 0 ]] && exit 0
 
-if [[ ! -e $NODE_DIR/bin/node ]] || [[ ! -e $NODE_DIR/bin/npm ]]; then
-  case $NODE_VERSION in
-    *"-nightly"*) CHANNEL="nightly";;
-    *"-rc"*)      CHANNEL="rc";;
-    *)            CHANNEL="release";;
+if [[ ! -e $node_dir/bin/node ]] || [[ ! -e $node_dir/bin/npm ]]; then
+  case $node_version in
+    *"-nightly"*) channel="nightly";;
+    *"-rc"*)      channel="rc";;
+    *)            channel="release";;
   esac
-  NODE_URL="https://nodejs.org/download/$CHANNEL/$NODE_VERSION/node-$NODE_VERSION-$NODE_OS-x64.tar.xz"
-  echo "js.sh: Downloading $NODE_URL ..." 1>&2
-  mkdir -p $NODE_DIR
-  curl $NODE_URL | tar -x -C $NODE_DIR --strip-components=1
+  node_url="https://nodejs.org/download/$channel/$node_version/node-$node_version-$node_os-x64.tar.xz"
+  echo "js.sh: Downloading $node_url ..." 1>&2
+  mkdir -p $node_dir
+  curl $node_url | tar -x -C $node_dir --strip-components=1
 fi
 
-export PATH="$PWD/$NODE_DIR/bin:$PATH"
-export NODE_PATH="$PWD/$NODE_DIR/lib/node_modules"
+export PATH="$PWD/$node_dir/bin:$PATH"
+export NODE_PATH="$PWD/$node_dir/lib/node_modules"
 export NODE_ENV="$NODE_ENV"
 
-NODE_CMD_BIN="$NODE_DIR/bin/$1"
-MODULE_CLI_BIN="node_modules/.bin/$1"
+node_cmd_bin="$node_dir/bin/$1"
+module_cli_bin="node_modules/.bin/$1"
 
-if [[ -x "$MODULE_CLI_BIN" ]]; then
+if [[ -x "$module_cli_bin" ]]; then
   shift
-  echo "js.sh: NODE_ENV=\"$NODE_ENV\" $NODE_DIR on $MODULE_CLI_BIN" 1>&2
-  exec "$MODULE_CLI_BIN" "$@"
-elif [[ -x "$NODE_CMD_BIN" ]]; then
+  echo "js.sh: NODE_ENV=\"$NODE_ENV\" $node_dir on $module_cli_bin" 1>&2
+  exec "$module_cli_bin" "$@"
+elif [[ -x "$node_cmd_bin" ]]; then
   shift
-  echo "js.sh: NODE_ENV=\"$NODE_ENV\" $NODE_CMD_BIN" 1>&2
-  exec "$NODE_CMD_BIN" "$@"
+  echo "js.sh: NODE_ENV=\"$NODE_ENV\" $node_cmd_bin" 1>&2
+  exec "$node_cmd_bin" "$@"
 else
   echo "js.sh: Don't know what \"$1\" is" 1>&2
   exit 1
