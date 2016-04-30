@@ -15,7 +15,8 @@ if [[ $# == 0 ]]; then
 fi
 
 node_os=$(uname | tr A-Z a-z)
-node_dir="vendor/node-$node_version-$node_os-x64"
+node_name="node-$node_version-$node_os-x64"
+node_dir="vendor/$node_name"
 
 optnum=$#
 while [ $# -gt 0 ]; do
@@ -55,10 +56,10 @@ if [[ ! -e $node_dir/bin/node ]] || [[ ! -e $node_dir/bin/npm ]]; then
     *"-rc"*)      channel="rc";;
     *)            channel="release";;
   esac
-  node_url="https://nodejs.org/download/$channel/$node_version/node-$node_version-$node_os-x64.tar.xz"
+  node_url="https://nodejs.org/download/$channel/$node_version/$node_name.tar.xz"
   echo "js.sh: Downloading $node_url ..." 1>&2
-  mkdir -p $node_dir
-  curl $node_url | tar -x -C $node_dir --strip-components=1
+  mkdir -p vendor
+  curl $node_url | tar -x -C vendor
 fi
 
 export PATH="$PWD/$node_dir/bin:$PATH"
