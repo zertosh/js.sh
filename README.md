@@ -1,6 +1,6 @@
 # js.sh
 
-Use a specific version node or iojs in the current directory.
+Use a specific version node in the current directory.
 
 ## install
 
@@ -17,12 +17,12 @@ curl -LO "https://github.com/zertosh/js.sh/raw/master/js.sh" && chmod +x js.sh
 ## defaults
 
 ```sh
-NODE_DIST=iojs-v1.7.1
+$NODE_VERSION=v6.0.0
 ```
 
 ## usage
 
-`js.sh` will look in `$PWD/vendor` for a node installation that matches `NODE_DIST`. If it isn't there, it'll download it and continue running your command. The command will run with a `PATH` and `NODE_PATH` set to the local node.
+`js.sh` will look in `$PWD/vendor` for a node installation that matches `NODE_VERSION`. If it isn't there, it'll download it and continue running your command. The command will run with a `PATH` and `NODE_PATH` set to the local node.
 
 ```sh
 # jump into the REPL
@@ -32,13 +32,13 @@ js.sh node
 js.sh npm install
 
 # run "npm install" with a particular version of node
-NODE_DIST=node-v0.12.2 js.sh npm install
+NODE_VERSION=v5.11.0 js.sh npm install
 
 # run a local CLI package (node_modules/.bin)
 js.sh browserify app/main.js > public/built.js
 
-# run a nightly iojs
-NODE_DIST=iojs-v2.0.0-nightly201505078bf878d6e5 js.sh node
+# run a nightly node
+NODE_VERSION=v6.0.0-nightly201604227940ecfa00 js.sh node
 
 # update npm and then use it
 js.sh npm install npm

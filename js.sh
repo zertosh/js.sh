@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-: ${node_version:=v6.0.0}
-# : ${node_version:=v5.11.0}
-# : ${node_version:=v4.4.3}
-# : ${node_version:=v6.0.0-rc.4}
-# : ${node_version:=v6.0.0-nightly201604227940ecfa00}
+: ${NODE_VERSION:=v6.0.0}
+# : ${NODE_VERSION:=v5.11.0}
+# : ${NODE_VERSION:=v4.4.3}
+# : ${NODE_VERSION:=v6.0.0-rc.4}
+# : ${NODE_VERSION:=v6.0.0-nightly201604227940ecfa00}
 
 set -e
 
@@ -15,7 +15,7 @@ if [[ $# == 0 ]]; then
 fi
 
 node_os=$(uname | tr A-Z a-z)
-node_name="node-$node_version-$node_os-x64"
+node_name="node-$NODE_VERSION-$node_os-x64"
 node_dir="vendor/$node_name"
 
 optnum=$#
@@ -54,12 +54,12 @@ done
 [[ $# != $optnum ]] && exit 0
 
 if [[ ! -e "$node_dir/bin/node" ]] || [[ ! -e "$node_dir/bin/npm" ]]; then
-  case $node_version in
+  case $NODE_VERSION in
     *"-nightly"*) channel="nightly";;
     *"-rc"*)      channel="rc";;
     *)            channel="release";;
   esac
-  node_url="https://nodejs.org/download/$channel/$node_version/$node_name.tar.xz"
+  node_url="https://nodejs.org/download/$channel/$NODE_VERSION/$node_name.tar.xz"
   echo "js.sh: Downloading $node_url ..." 1>&2
   mkdir -p vendor
   curl $node_url | tar -x -C vendor
