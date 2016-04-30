@@ -10,28 +10,33 @@ set -e
 
 if [[ $# == 0 ]]; then
   echo 'usage: js.sh [--node-bin] [--npm-bin] [--clean] [--env]'
-  echo '       js.sh [--clean] [node|npm|MODULE_CLI] [args...]'
+  echo '       js.sh [node|npm|MODULE_BIN] [args...]'
   exit 1
 fi
 
 node_os=$(uname | tr A-Z a-z)
 node_dir="vendor/node-$node_version-$node_os-x64"
 
-while test $# -gt 0; do
+optnum=$#
+while [ $# -gt 0 ]; do
   case "$1" in
-    --node-bin) echo $node_dir/bin/node; shift;;
-    --npm-bin)  echo $node_dir/bin/npm; shift;;
+    --node-bin)
+      echo $node_dir/bin/node
+      shift
+      ;;
+    --npm-bin)
+      echo $node_dir/bin/npm
+      shift
+      ;;
+    --env)
+      echo "export PATH=\"$PWD/$node_dir/bin:\$PATH\""
+      echo "export NODE_PATH=\"$PWD/$node_dir/lib/node_modules\""
+      shift
+      ;;
     --clean)
       if [[ -d 'vendor' ]]; then
         find 'vendor' -maxdepth 1 -type d -name 'node-v*' \
           -exec sh -c 'echo "js.sh: Removing {}" 1>&2; rm -rf "{}"' \;
-      fi
-      shift
-      ;;
-    --env)
-      if [[ $PATH != $PWD/$node_dir/bin:* ]]; then
-        echo "export PATH=\"$PWD/$node_dir/bin:\$PATH\""
-        echo "export NODE_PATH=\"$PWD/$node_dir/lib/node_modules\""
       fi
       shift
       ;;
@@ -42,6 +47,7 @@ while test $# -gt 0; do
 done
 
 [[ $# == 0 ]] && exit 0
+[[ $# != $optnum ]] && exit 0
 
 if [[ ! -e $node_dir/bin/node ]] || [[ ! -e $node_dir/bin/npm ]]; then
   case $node_version in
