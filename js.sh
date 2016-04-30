@@ -6,8 +6,6 @@
 # : ${node_version:=v6.0.0-rc.4}
 # : ${node_version:=v6.0.0-nightly201604227940ecfa00}
 
-: ${NODE_ENV:=development}
-
 set -e
 
 if [[ $# == 0 ]]; then
@@ -34,7 +32,6 @@ while test $# -gt 0; do
       if [[ $PATH != $PWD/$node_dir/bin:* ]]; then
         echo "export PATH=\"$PWD/$node_dir/bin:\$PATH\""
         echo "export NODE_PATH=\"$PWD/$node_dir/lib/node_modules\""
-        echo "export NODE_ENV=$NODE_ENV"
       fi
       shift
       ;;
@@ -60,18 +57,17 @@ fi
 
 export PATH="$PWD/$node_dir/bin:$PATH"
 export NODE_PATH="$PWD/$node_dir/lib/node_modules"
-export NODE_ENV="$NODE_ENV"
 
 node_cmd_bin="$node_dir/bin/$1"
 module_cli_bin="node_modules/.bin/$1"
 
 if [[ -x "$module_cli_bin" ]]; then
   shift
-  echo "js.sh: NODE_ENV=\"$NODE_ENV\" $node_dir on $module_cli_bin" 1>&2
+  echo "js.sh: $node_dir on $module_cli_bin" 1>&2
   exec "$module_cli_bin" "$@"
 elif [[ -x "$node_cmd_bin" ]]; then
   shift
-  echo "js.sh: NODE_ENV=\"$NODE_ENV\" $node_cmd_bin" 1>&2
+  echo "js.sh: $node_cmd_bin" 1>&2
   exec "$node_cmd_bin" "$@"
 else
   echo "js.sh: Don't know what \"$1\" is" 1>&2
