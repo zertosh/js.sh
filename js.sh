@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-: ${NODE_VERSION:=v6.0.0}
-# : ${NODE_VERSION:=v5.11.0}
-# : ${NODE_VERSION:=v4.4.3}
-# : ${NODE_VERSION:=v6.0.0-rc.4}
-# : ${NODE_VERSION:=v6.0.0-nightly201604227940ecfa00}
+: ${NODE_VERSION:=v6.3.0}
+# : ${NODE_VERSION:=v4.5.0}
+# : ${NODE_VERSION:=v5.12.0}
+# : ${NODE_VERSION:=v6.2.1-rc.1}
+# : ${NODE_VERSION:=v7.0.0-nightly20160916d3834a1fa3}
 
 set -e
 
